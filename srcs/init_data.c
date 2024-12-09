@@ -20,12 +20,12 @@ void	init_list(t_philo *data)
 
 	first = data->philos;
 	i = 0;
-	while (i < data->n_philo)
+	while (i < data->n_philo - 1)
 	{
 		tmp = (t_list *)malloc(sizeof(t_list));
 		tmp->id = i + 2;
 		tmp->last_meal = 0;
-		//tmp->fork
+		//tmp->fork = NULL;
 		tmp->next = NULL;
 		data->philos->next = tmp;
 		data->philos = data->philos->next;
@@ -47,7 +47,7 @@ void	init_data(t_philo *data, int ac, char **av)
 	data->philos = (t_list *)malloc(sizeof(t_list));
 	data->philos->id = 1;
 	data->philos->last_meal = 0;
-	//data->philos->fork
+	//data->philos->fork = NULL;
 	data->philos->next = NULL;
 	init_list(data);
 }
