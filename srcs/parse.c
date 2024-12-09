@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exits.c                                            :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pavicent <pavicent@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 11:40:55 by pavicent          #+#    #+#             */
-/*   Updated: 2024/12/05 11:40:56 by pavicent         ###   ########.fr       */
+/*   Created: 2024/12/09 10:56:47 by pavicent          #+#    #+#             */
+/*   Updated: 2024/12/09 10:56:49 by pavicent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	exit_message(int pr)
+int	parse_values(char **av)
 {
-	if (pr == 1)
+	int	i;
+	int	j;
+
+	i = 1;
+	while (av[i])
 	{
-		printf("./philo number_of_philosophers ");
-		printf("time_to_die time_to_eat time_to_sleep\n");
+		j = 0;
+		while (av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
 	}
-	if (pr == 2)
-		printf("Values must be digits\n");
-	exit(EXIT_FAILURE);
+	return (1);
 }

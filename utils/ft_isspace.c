@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exits.c                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pavicent <pavicent@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 11:40:55 by pavicent          #+#    #+#             */
-/*   Updated: 2024/12/05 11:40:56 by pavicent         ###   ########.fr       */
+/*   Created: 2024/07/10 11:36:28 by pavicent          #+#    #+#             */
+/*   Updated: 2024/07/10 11:36:30 by pavicent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	exit_message(int pr)
+int	ft_isspace(int c)
 {
-	if (pr == 1)
-	{
-		printf("./philo number_of_philosophers ");
-		printf("time_to_die time_to_eat time_to_sleep\n");
-	}
-	if (pr == 2)
-		printf("Values must be digits\n");
-	exit(EXIT_FAILURE);
+	if (c == ' ' || c == '\n' || c == '\t'
+		|| c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
 }

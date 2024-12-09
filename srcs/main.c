@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "philo.h"
 
 int	main(int ac, char **av)
 {
 	t_philo	*data;
 
-	if (ac < 5 || av[1] == NULL)
+	if (ac != 5 && ac != 6)
 		exit_message(1);
-	if (parse_values(av))
+	if (!parse_values(av))
 		exit_message(2);
+	init_data(data, ac, av);
 
 }

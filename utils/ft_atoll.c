@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exits.c                                            :+:      :+:    :+:   */
+/*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pavicent <pavicent@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 11:40:55 by pavicent          #+#    #+#             */
-/*   Updated: 2024/12/05 11:40:56 by pavicent         ###   ########.fr       */
+/*   Created: 2024/07/09 12:07:39 by pavicent          #+#    #+#             */
+/*   Updated: 2024/07/09 12:09:50 by pavicent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	exit_message(int pr)
+int64_t	ft_atoll(const char *str)
 {
-	if (pr == 1)
+	size_t	i;
+	int32_t	sign;
+	int64_t	out;
+
+	i = 0;
+	sign = 1;
+	out = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		printf("./philo number_of_philosophers ");
-		printf("time_to_die time_to_eat time_to_sleep\n");
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-	if (pr == 2)
-		printf("Values must be digits\n");
-	exit(EXIT_FAILURE);
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		out = (out * 10) + (str[i++] - '0');
+		if (!ft_isdigit(str[i]) && !str[i])
+			return (out * sign);
+	}
+	return (1);
 }
