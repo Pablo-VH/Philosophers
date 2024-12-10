@@ -12,21 +12,47 @@
 
 #include "philo.h"
 
+int	ft_check_len(char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		while (str[i] == ' ')
+			i++;
+		while (str[i] == '-' || str[i] == '+')
+			i++;
+		while (str[i] == '0')
+			i++;
+		while (str[i])
+		{
+			if (!ft_isdigit(str[i]))
+				return (0);
+			i++;
+			len++;
+		}
+	}
+		if (len > 10)
+			return (0);
+	return (len);
+}
+
 int	parse_values(char **av)
 {
 	int	i;
-	int	j;
 
 	i = 1;
 	while (av[i])
 	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (!ft_isdigit(av[i][j]))
-				return (0);
-			j++;
-		}
+		if (ft_check_len(av[i]) == 0)
+			return (0);
+		if (ft_atoi(av[i]) == 0 && ft_atoll(av[i]) != 0)
+			return (0);
+		if (ft_atoll(av[i]) > INT_MAX || ft_atoll(av[i]) < 0)
+			return (0);
 		i++;
 	}
 	return (1);

@@ -21,25 +21,35 @@
 # include <sys/types.h>
 # include <limits.h>
 # include <stdlib.h>
+# include <sys/time.h>
+# include <stdbool.h>
 
 //el tenedor con el que entran es el de la izquierda. Los pares cogen primero su tenedor, los impares el otro
 typedef struct s_list
 {
 	int				id;
 	pthread_mutex_t	fork;
-	long			last_meal;
+	long			last_meal; //time passed from last meal
+	long			meals_count;
+	bool			full;
 	//struct s_list	*prev;
+	pthread_t		thread_id;
 	struct s_list	*next;	
 }					t_list;
 
 typedef struct s_philo
 {
-	int	n_philo;
-	int	tt_die;
-	int	tt_eat;
-	int	tt_sleep;
-	int	nt_eat;
-	t_list	*philos;
+	long			n_philo;
+	long			tt_die;
+	long			tt_eat;
+	long			tt_sleep;
+	long			nt_eat;
+	long			total_meals;
+	long			philo_meals;
+	long			start_time;
+	bool			end_sim;
+	t_list			*philos;
+	pthread_mutex_t print_mutex;
 }		t_philo;
 
 
@@ -48,6 +58,7 @@ int		ft_isdigit(int c);
 int		ft_isspace(int c);
 int		parse_values(char **av);
 int64_t	ft_atoll(const char *str);
+t_philo	*init_data(int ac, char **av);
 void	exit_message(int pr);
 
 #endif

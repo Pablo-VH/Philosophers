@@ -20,6 +20,6 @@ int	main(int ac, char **av)
 		exit_message(1);
 	if (!parse_values(av))
 		exit_message(2);
-	init_data(data, ac, av);
+	data = init_data(ac, av);
 
 }
