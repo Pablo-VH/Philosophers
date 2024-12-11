@@ -48,6 +48,7 @@ typedef struct s_philo
 	long			philo_meals;
 	long			start_time;
 	bool			end_sim;
+	pthread_mutex_t	f_write;
 	t_list			*philos;
 	pthread_mutex_t print_mutex;
 }		t_philo;
