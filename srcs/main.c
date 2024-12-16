@@ -12,16 +12,17 @@
 
 #include "philo.h"
 
-int	create_philos(t_philo *data)
+void	create_philos(t_philo *data)
 {
 	int	ph;
 
 	ph = 1;
 	while (ph < data->n_philo)
 	{
-		pthread_create(data->philos->thread_id, NULL, )
+		pthread_create(data->philos->thread_id, NULL, philo_routine,
+			data->philos);
+		ph++;
 	}
-	
 }
 
 int	main(int ac, char **av)
@@ -33,7 +34,5 @@ int	main(int ac, char **av)
 	if (!parse_values(av))
 		exit_message(2);
 	data = init_data(ac, av);
-	if (!create_philos(data))
-		free_struct(data);
-
+	create_philos(data);
 }

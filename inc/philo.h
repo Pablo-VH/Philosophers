@@ -28,12 +28,13 @@
 typedef struct s_list
 {
 	int				id;
-	pthread_mutex_t	fork;
+	pthread_mutex_t	*fork;
 	long			last_meal; //time passed from last meal
 	long			meals_count;
 	bool			full;
 	//struct s_list	*prev;
 	pthread_t		thread_id;
+	t_philo			*data;
 	struct s_list	*next;	
 }					t_list;
 
@@ -51,7 +52,7 @@ typedef struct s_philo
 	pthread_mutex_t	f_write;
 	t_list			*philos;
 	pthread_mutex_t print_mutex;
-}		t_philo;
+}					t_philo;
 
 
 int		ft_atoi(const char *str);
@@ -60,6 +61,8 @@ int		ft_isspace(int c);
 int		parse_values(char **av);
 int64_t	ft_atoll(const char *str);
 t_philo	*init_data(int ac, char **av);
+void	eat(t_list *philo);
 void	exit_message(int pr);
+void	philo_routine(void	*arg);
 
 #endif

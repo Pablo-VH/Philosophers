@@ -8,7 +8,7 @@ SRCS_DIR    	= srcs/
 UTILS_DIR		= utils/
 OBJS_DIR    	= objs/
 
-SRCS_FILES		= main.c exits.c parse.c init_data.c
+SRCS_FILES		= main.c exits.c parse.c init_data.c action.c
 UTILS_FILES		= ft_atoi.c ft_atoll.c ft_isdigit.c ft_isspace.c \
 
 OBJS_FILES		= $(SRCS_FILES:.c=.o) $(UTILS_FILES:.c=.o)
