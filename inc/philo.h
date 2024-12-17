@@ -31,7 +31,7 @@ typedef struct s_list
 	pthread_mutex_t	*fork;
 	long			last_meal; //time passed from last meal
 	long			meals_count;
-	bool			full;
+	bool			dead;
 	//struct s_list	*prev;
 	pthread_t		thread_id;
 	t_philo			*data;
@@ -50,6 +50,8 @@ typedef struct s_philo
 	long			start_time;
 	bool			end_sim;
 	pthread_mutex_t	f_write;
+	pthread_mutex_t *t_eat;
+	pthread_mutex_t	*m_end_sim;
 	t_list			*philos;
 	pthread_mutex_t print_mutex;
 }					t_philo;

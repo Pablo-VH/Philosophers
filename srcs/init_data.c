@@ -27,7 +27,9 @@ void	init_list(t_philo *data)
 			exit_message(3);
 		tmp->id = i + 1;
 		tmp->last_meal = 0;
-		pthread_mutex_init(&tmp->fork, NULL);
+		pthread_mutex_init(tmp->fork, NULL);
+		tmp->meals_count = 0;
+		tmp->dead = false;
 		tmp->next = NULL;
 		data->philos->data = data;
 		data->philos->next = tmp;
@@ -52,9 +54,13 @@ t_philo	*init_data(int ac, char **av)
 	data->nt_eat = -1;
 	if (ac == 6)
 		data->nt_eat = ft_atoi(av[5]);
+	data->end_sim = false;
+	pthread_mutex_init(data->m_end_sim, NULL);
+	pthread_mutex_init(data->t_eat, NULL);
 	data->philos = (t_list *)malloc(sizeof(t_list));
 	data->philos->id = 1;
 	data->philos->last_meal = 0;
+	data->philos->meals_count = 0;
 	pthread_mutex_init(data->philos->fork, NULL);
 	data->philos->next = NULL;
 	data->philos->data = data;

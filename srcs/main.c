@@ -11,6 +11,14 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+void	reaper(t_philo *data)
+{
+	while (1)
+	{
+		//continua comprobacion
+	}
+	
+}
 
 void	create_philos(t_philo *data)
 {
@@ -35,4 +43,6 @@ int	main(int ac, char **av)
 		exit_message(2);
 	data = init_data(ac, av);
 	create_philos(data);
+	reaper(data);
+	return (0);
 }
