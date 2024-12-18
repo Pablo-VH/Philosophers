@@ -11,24 +11,71 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	check_total_meals(t_philo *data)
+{
+	if (data->total_meals == data->nt_eat)
+		data->end_sim = true;
+}
+
+void	check_death(t_list *philo)
+{
+	long	current_time;
+
+	current_time = get_current_time();
+	if (philo->meals_count > 0)
+	{
+		if (current_time > philo->last_meal + philo->data->tt_die)
+		{
+			philo->dead = true;
+			philo->data->end_sim = true;
+		}
+	}
+	else
+	{
+		if (current_time > philo->data->start_time + philo->data->tt_die)
+		{
+			philo->dead = true;
+			philo->data->end_sim = true;
+		}
+	}
+}
+	
+
 void	reaper(t_philo *data)
 {
+	t_list	*current;
+
+	current = data->philos;
 	while (1)
 	{
-		//continua comprobacion
+		check_death(current);
+		check_total_meals(data);
+		if (current->dead == true)
+		{
+			printf("Time: [%ld] Philo🧝‍♂️: %d is dead 💀\n",
+				get_current_time() - data->start_time, current->id);
+			ft_free_struct(data);
+			exit(EXIT_FAILURE);
+		}
+		if (data->end_sim)
+			end_sim(data);
+		current = current->next;
 	}
-	
 }
 
 void	create_philos(t_philo *data)
 {
 	int	ph;
+	t_list *current;
 
 	ph = 1;
-	while (ph < data->n_philo)
+	current = data->philos;
+	while (ph <= data->n_philo)
 	{
-		pthread_create(data->philos->thread_id, NULL, philo_routine,
-			data->philos);
+		pthread_create(&current->thread_id, NULL, philo_routine,
+			current);
+		current = current->next;
 		ph++;
 	}
 }

@@ -35,8 +35,8 @@ int	ft_check_len(char *str)
 			len++;
 		}
 	}
-		if (len > 10)
-			return (0);
+	if (len > 10)
+		return (0);
 	return (len);
 }
 
