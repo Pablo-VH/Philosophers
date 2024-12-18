@@ -14,7 +14,7 @@
 
 void	check_total_meals(t_philo *data)
 {
-	if (data->total_meals == data->nt_eat)
+	if (data->total_meals == data->nt_eat * data->n_philo)
 		data->end_sim = true;
 }
 
@@ -53,7 +53,7 @@ void	reaper(t_philo *data)
 		check_total_meals(data);
 		if (current->dead == true)
 		{
-			printf("Time: [%ld] Philo🧝‍♂️: %d is dead 💀\n",
+			printf("Time: [%ld] Philo🧝‍♂️: %d died 💀\n",
 				get_current_time() - data->start_time, current->id);
 			ft_free_struct(data);
 			exit(EXIT_FAILURE);

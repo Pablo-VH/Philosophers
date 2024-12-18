@@ -29,16 +29,19 @@ void	eat(t_list *philo)
 {
 	printf("Time: [%ld] Philo🧝‍♂️: %d is eating 🍜\n",
 		get_current_time() - philo->data->start_time, philo->id);
-	pthread_mutex_lock(&philo->data->t_eat);
+	pthread_mutex_lock(&philo->data->add_meals);
+	philo->data->total_meals++;
 	philo->meals_count++;
-	pthread_mutex_unlock(&philo->data->t_eat);
+	if (philo->meals_count == philo->data->nt_eat)
+		philo->full = true;
+	pthread_mutex_unlock(&philo->data->add_meals);
 	usleep(philo->data->tt_eat * 1000);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&philo->next->fork);
 		pthread_mutex_unlock(&philo->fork);
 	}
-	if (philo->id % 2 != 0)
+	else
 	{
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
@@ -63,9 +66,9 @@ void	take_forks(t_list *philo)
 	}
 	printf("Time: [%ld] Philo🧝‍♂️ %d: has taken a fork 🍴\n",
 		get_current_time() - philo->data->start_time, philo->id);
-	pthread_mutex_lock(&philo->data->t_eat);
+	//pthread_mutex_lock(&philo->data->t_eat);
 	philo->last_meal = get_current_time();
-	pthread_mutex_unlock(&philo->data->t_eat);
+	//pthread_mutex_unlock(&philo->data->t_eat);
 	eat(philo);
 }
 
@@ -76,17 +79,16 @@ void	*philo_routine(void	*arg)
 	philo = (t_list *)arg;
 	while (1)
 	{
-		
-		if (philo->data->end_sim == true)
+		if (check_status(philo))
 			break ;
 		take_forks(philo);
-		if (philo->data->end_sim == true)
+		if (check_status(philo))
 			break ;
 		philo_sleep(philo);
-		if (philo->data->end_sim == true)
+		if (check_status(philo))
 			break ;
 		philo_think(philo);
-		if (philo->data->end_sim == true)
+		if (check_status(philo))
 			break ;
 	}
 	return (NULL);

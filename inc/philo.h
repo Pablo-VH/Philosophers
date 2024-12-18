@@ -32,6 +32,7 @@ typedef struct s_list
 	long			last_meal; //time passed from last meal
 	long			meals_count;
 	bool			dead;
+	bool			full;
 	//struct s_list	*prev;
 	pthread_t		thread_id;
 	struct s_philo	*data;
@@ -50,10 +51,14 @@ typedef struct s_philo
 	long			start_time;
 	bool			end_sim;
 	pthread_mutex_t	t_eat;
+	pthread_mutex_t	add_meals;
 	pthread_mutex_t	m_end_sim;
+	pthread_mutex_t	m_status;
+	pthread_mutex_t	m_time;
 	t_list			*philos;
 }					t_philo;
 
+int		check_status(t_list *philo);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 int		ft_isspace(int c);

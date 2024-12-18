@@ -12,6 +12,28 @@
 
 #include "philo.h"
 
+int		check_status(t_list *philo)
+{
+	pthread_mutex_lock(&philo->data->m_status);
+	if (philo->data->end_sim == true)
+	{
+		pthread_mutex_unlock(&philo->data->m_status);
+		return (1);
+	}
+	else if (philo->full == true)
+	{
+		pthread_mutex_unlock(&philo->data->m_status);
+		return (1);
+	}
+	else if (philo->dead == true)
+	{
+		pthread_mutex_unlock(&philo->data->m_status);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->m_status);
+	return (0);
+}
+
 long	get_current_time(void)
 {
 	struct timeval	tv;
@@ -53,5 +75,8 @@ void	ft_free_struct(t_philo *data)
 		free(data->philos);*/
 	pthread_mutex_destroy(&data->t_eat);
 	pthread_mutex_destroy(&data->m_end_sim);
+	pthread_mutex_destroy(&data->add_meals);
+	pthread_mutex_destroy(&data->m_status);
+	pthread_mutex_destroy(&data->m_time);
 	free(data);
 }

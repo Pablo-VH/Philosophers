@@ -12,6 +12,15 @@
 
 #include "philo.h"
 
+void	init_mutex(t_philo *data)
+{
+	pthread_mutex_init(&data->m_end_sim, NULL);
+	pthread_mutex_init(&data->t_eat, NULL);
+	pthread_mutex_init(&data->add_meals, NULL);
+	pthread_mutex_init(&data->m_status, NULL);
+	pthread_mutex_init(&data->m_time, NULL);
+}
+
 void	init_list(t_philo *data)
 {
 	t_list	*first;
@@ -30,6 +39,7 @@ void	init_list(t_philo *data)
 		pthread_mutex_init(&tmp->fork, NULL);
 		tmp->meals_count = 0;
 		tmp->dead = false;
+		tmp->full = false;
 		tmp->next = NULL;
 		tmp->data = data;
 		data->philos->next = tmp;
@@ -53,19 +63,17 @@ t_philo	*init_data(int ac, char **av)
 	data->tt_sleep = ft_atoi(av[4]);
 	data->nt_eat = -1;
 	data->start_time = get_current_time();
-	printf("start_time=%ld\n", data->start_time);
 	if (ac == 6)
 		data->nt_eat = ft_atoi(av[5]);
-	pthread_mutex_init(&data->m_end_sim, NULL);
-	pthread_mutex_init(&data->t_eat, NULL);
+	init_mutex(data);
 	data->philos = (t_list *)malloc(sizeof(t_list));
 	data->philos->id = 1;
 	data->philos->last_meal = 0;
 	data->philos->meals_count = 0;
+	data->philos->full = false;
 	data->philos->dead = false;
 	pthread_mutex_init(&data->philos->fork, NULL);
 	data->philos->next = NULL;
 	data->philos->data = data;
-	init_list(data);
-	return (data);
+	return (init_list(data), data);
 }
