@@ -22,7 +22,7 @@ void	philo_sleep(t_list *philo)
 {
 	printf("Time: [%ld] Philo🧝‍♂️: %d is sleeping 🛏️\n",
 		get_current_time() - philo->data->start_time, philo->id);
-	usleep(philo->data->tt_sleep * 1000);
+	ft_usleep(philo->data->tt_sleep);
 }
 
 void	eat(t_list *philo)
@@ -35,7 +35,7 @@ void	eat(t_list *philo)
 	if (philo->meals_count == philo->data->nt_eat)
 		philo->full = true;
 	pthread_mutex_unlock(&philo->data->add_meals);
-	usleep(philo->data->tt_eat * 1000);
+	ft_usleep(philo->data->tt_eat);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&philo->next->fork);

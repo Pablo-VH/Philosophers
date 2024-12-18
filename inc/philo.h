@@ -70,6 +70,7 @@ void	eat(t_list *philo);
 void	end_sim(t_philo *data);
 void	exit_message(int pr);
 void	ft_free_struct(t_philo *data);
+void	ft_usleep(long time);
 void	*philo_routine(void	*arg);
 
 #endif

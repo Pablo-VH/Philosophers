@@ -12,6 +12,15 @@
 
 #include "philo.h"
 
+void	ft_usleep(long time)
+{
+	long	start;
+
+	start = get_current_time();
+	while (get_current_time() - start < time)
+		usleep(100);
+}
+
 void	init_mutex(t_philo *data)
 {
 	pthread_mutex_init(&data->m_end_sim, NULL);
