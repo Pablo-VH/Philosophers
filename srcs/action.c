@@ -11,31 +11,32 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-//asegurame de comprobar siempre si hay algun philo muerto
+
 void	philo_think(t_list *philo)
 {
-	printf("Time: [%ld] Philo🧝‍♂️: %d is thinking 🤔\n",
-		get_current_time() - philo->data->start_time, philo->id);
+	ft_print(1, philo);
+	if (philo->id % 2 != 0 && (philo->data->n_philo % 2 != 0))
+		ft_usleep(philo->data->think_time * 0.45, philo);
 }
 
 void	philo_sleep(t_list *philo)
 {
-	printf("Time: [%ld] Philo🧝‍♂️: %d is sleeping 🛏️\n",
-		get_current_time() - philo->data->start_time, philo->id);
-	ft_usleep(philo->data->tt_sleep);
+	ft_print(3, philo);
+	ft_usleep(philo->data->tt_sleep, philo);
 }
 
 void	eat(t_list *philo)
 {
-	printf("Time: [%ld] Philo🧝‍♂️: %d is eating 🍜\n",
-		get_current_time() - philo->data->start_time, philo->id);
+	check_status(philo);
+	ft_print(2, philo);
 	pthread_mutex_lock(&philo->data->add_meals);
 	philo->data->total_meals++;
 	philo->meals_count++;
 	if (philo->meals_count == philo->data->nt_eat)
 		philo->full = true;
 	pthread_mutex_unlock(&philo->data->add_meals);
-	ft_usleep(philo->data->tt_eat);
+	check_status(philo);
+	ft_usleep(philo->data->tt_eat, philo);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&philo->next->fork);
@@ -52,23 +53,24 @@ void	take_forks(t_list *philo)
 {
 	if (philo->id % 2 == 0)
 	{
+		check_status(philo);
 		pthread_mutex_lock(&philo->fork);
-		printf("Time: [%ld] Philo🧝‍♂️ %d: has taken a fork 🍴\n",
-			get_current_time() - philo->data->start_time, philo->id);
+		check_status(philo);
+		ft_print(4, philo);
 		pthread_mutex_lock(&philo->next->fork);
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->next->fork);
-		printf("Time: [%ld] Philo🧝‍♂️ %d: has taken a fork 🍴\n",
-			get_current_time() - philo->data->start_time, philo->id);
+		check_status(philo);
+		ft_print(4, philo);
 		pthread_mutex_lock(&philo->fork);
 	}
-	printf("Time: [%ld] Philo🧝‍♂️ %d: has taken a fork 🍴\n",
-		get_current_time() - philo->data->start_time, philo->id);
-	//pthread_mutex_lock(&philo->data->t_eat);
+	check_status(philo);
+	ft_print(4, philo);
+	pthread_mutex_lock(&philo->data->t_eat);
 	philo->last_meal = get_current_time();
-	//pthread_mutex_unlock(&philo->data->t_eat);
+	pthread_mutex_unlock(&philo->data->t_eat);
 	eat(philo);
 }
 
@@ -77,6 +79,10 @@ void	*philo_routine(void	*arg)
 	t_list	*philo;
 
 	philo = (t_list *)arg;
+	if (philo->data->n_philo != 1 && philo->id % 2 != 0)
+		ft_usleep(50, philo);
+	philo->data->think_time = take_think(philo->data);
+	//think time es t_eat *2 - t_sleep
 	while (1)
 	{
 		if (check_status(philo))
@@ -88,8 +94,6 @@ void	*philo_routine(void	*arg)
 		if (check_status(philo))
 			break ;
 		philo_think(philo);
-		if (check_status(philo))
-			break ;
 	}
 	return (NULL);
 }

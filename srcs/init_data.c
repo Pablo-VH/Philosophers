@@ -12,13 +12,25 @@
 
 #include "philo.h"
 
-void	ft_usleep(long time)
+long	take_think(t_philo *data)
+{
+	if (data->tt_eat * 2 - data->tt_sleep <= 0)
+		return (0);
+	else
+		return (data->tt_eat * 2 - data->tt_sleep);
+}
+
+void	ft_usleep(long wait, t_list *philo)
 {
 	long	start;
 
 	start = get_current_time();
-	while (get_current_time() - start < time)
-		usleep(100);
+	while (1)
+	{
+		if (get_current_time() >= wait + start)
+			break ;
+		check_status(philo);
+	}
 }
 
 void	init_mutex(t_philo *data)
@@ -28,6 +40,8 @@ void	init_mutex(t_philo *data)
 	pthread_mutex_init(&data->add_meals, NULL);
 	pthread_mutex_init(&data->m_status, NULL);
 	pthread_mutex_init(&data->m_time, NULL);
+	pthread_mutex_init(&data->m_printf, NULL);
+	pthread_mutex_init(&data->m_death, NULL);
 }
 
 void	init_list(t_philo *data)
@@ -70,6 +84,7 @@ t_philo	*init_data(int ac, char **av)
 	data->tt_die = ft_atoi(av[2]);
 	data->tt_eat = ft_atoi(av[3]);
 	data->tt_sleep = ft_atoi(av[4]);
+	data->think_time = 0;
 	data->nt_eat = -1;
 	data->start_time = get_current_time();
 	if (ac == 6)

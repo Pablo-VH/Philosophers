@@ -42,6 +42,7 @@ typedef struct s_list
 typedef struct s_philo
 {
 	long			n_philo;
+	long			think_time;
 	long			tt_die;
 	long			tt_eat;
 	long			tt_sleep;
@@ -55,6 +56,8 @@ typedef struct s_philo
 	pthread_mutex_t	m_end_sim;
 	pthread_mutex_t	m_status;
 	pthread_mutex_t	m_time;
+	pthread_mutex_t	m_printf;
+	pthread_mutex_t	m_death;
 	t_list			*philos;
 }					t_philo;
 
@@ -65,12 +68,15 @@ int		ft_isspace(int c);
 int		parse_values(char **av);
 int64_t	ft_atoll(const char *str);
 long	get_current_time(void);
+long	take_think(t_philo *data);
 t_philo	*init_data(int ac, char **av);
+void	check_death2(t_list *philo, long current_time);
 void	eat(t_list *philo);
 void	end_sim(t_philo *data);
 void	exit_message(int pr);
 void	ft_free_struct(t_philo *data);
-void	ft_usleep(long time);
+void	ft_print(int pr, t_list *philo);
+void	ft_usleep(long wait, t_list *philo);
 void	*philo_routine(void	*arg);
 
 #endif

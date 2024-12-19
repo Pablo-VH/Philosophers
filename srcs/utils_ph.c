@@ -12,24 +12,29 @@
 
 #include "philo.h"
 
-int		check_status(t_list *philo)
+int	check_status(t_list *philo)
 {
 	pthread_mutex_lock(&philo->data->m_status);
+	pthread_mutex_lock(&philo->data->m_death);
 	if (philo->data->end_sim == true)
 	{
+		pthread_mutex_unlock(&philo->data->m_death);
 		pthread_mutex_unlock(&philo->data->m_status);
 		return (1);
 	}
 	else if (philo->full == true)
 	{
+		pthread_mutex_unlock(&philo->data->m_death);
 		pthread_mutex_unlock(&philo->data->m_status);
 		return (1);
 	}
 	else if (philo->dead == true)
 	{
+		pthread_mutex_unlock(&philo->data->m_death);
 		pthread_mutex_unlock(&philo->data->m_status);
 		return (1);
 	}
+	pthread_mutex_unlock(&philo->data->m_death);
 	pthread_mutex_unlock(&philo->data->m_status);
 	return (0);
 }
@@ -44,6 +49,17 @@ long	get_current_time(void)
 
 void	end_sim(t_philo *data)
 {
+	int		ph;
+	t_list	*current;
+
+	ph = 1;
+	current = data->philos;
+	while (ph <= data->n_philo)
+	{
+		pthread_join(current->thread_id, NULL);
+		ph++;
+		current = current->next;
+	}
 	ft_free_struct(data);
 	exit(EXIT_SUCCESS);
 }
@@ -71,12 +87,12 @@ void	ft_free_list(t_list *philo, t_philo *data)
 void	ft_free_struct(t_philo *data)
 {
 	ft_free_list(data->philos, data);
-	/*if (data->philos)
-		free(data->philos);*/
 	pthread_mutex_destroy(&data->t_eat);
 	pthread_mutex_destroy(&data->m_end_sim);
 	pthread_mutex_destroy(&data->add_meals);
 	pthread_mutex_destroy(&data->m_status);
 	pthread_mutex_destroy(&data->m_time);
+	pthread_mutex_destroy(&data->m_printf);
+	pthread_mutex_destroy(&data->m_death);
 	free(data);
 }
