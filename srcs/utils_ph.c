@@ -22,12 +22,6 @@ int	check_status(t_list *philo)
 		pthread_mutex_unlock(&philo->data->m_status);
 		return (1);
 	}
-	else if (philo->full == true)
-	{
-		pthread_mutex_unlock(&philo->data->m_death);
-		pthread_mutex_unlock(&philo->data->m_status);
-		return (1);
-	}
 	else if (philo->dead == true)
 	{
 		pthread_mutex_unlock(&philo->data->m_death);

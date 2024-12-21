@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavicent <pavicent@student.42madrid>       +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:33:52 by pavicent          #+#    #+#             */
-/*   Updated: 2024/12/05 11:33:55 by pavicent         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:27:53 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,22 @@
 
 void	check_total_meals(t_philo *data)
 {
+	int		ph;
+	int		tot;
+	t_list	*current;
+
+	ph = 1;
+	current = data->philos;
+	tot = 0;
 	pthread_mutex_lock(&data->add_meals);
-	if (data->total_meals == data->nt_eat * data->n_philo)
+	while (ph <= data->n_philo)
+	{
+		if (current->full == true)
+			tot++;
+		ph++;
+		current = current->next;
+	}
+	if (tot == data->n_philo)
 	{
 		pthread_mutex_lock(&data->m_status);
 		data->end_sim = true;

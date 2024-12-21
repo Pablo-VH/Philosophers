@@ -1,6 +1,6 @@
 NAME        	= philo
 CC          	= gcc
-CFLAGS      	= -Wextra -Werror -Wall -I$(INC) -g3 -fsanitize=thread -pthread
+CFLAGS      	= -Wextra -Werror -Wall -I$(INC) -g3 #-fsanitize=thread -pthread
 #-g3 -fsanitize=address valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --trace-children=yes 
 INC         	= inc/
 

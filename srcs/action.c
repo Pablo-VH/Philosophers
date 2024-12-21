@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavicent <pavicent@student.42madrid>       +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:10:54 by pavicent          #+#    #+#             */
-/*   Updated: 2024/12/16 13:10:56 by pavicent         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:25:43 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	philo_sleep(t_list *philo)
 
 void	eat(t_list *philo)
 {
-	check_status(philo);
 	ft_print(2, philo);
 	pthread_mutex_lock(&philo->data->add_meals);
 	philo->data->total_meals++;
@@ -35,7 +34,6 @@ void	eat(t_list *philo)
 	if (philo->meals_count == philo->data->nt_eat)
 		philo->full = true;
 	pthread_mutex_unlock(&philo->data->add_meals);
-	check_status(philo);
 	ft_usleep(philo->data->tt_eat, philo);
 	if (philo->id % 2 == 0)
 	{
@@ -53,21 +51,14 @@ void	take_forks(t_list *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		check_status(philo);
-		pthread_mutex_lock(&philo->fork);
-		check_status(philo);
-		ft_print(4, philo);
-		pthread_mutex_lock(&philo->next->fork);
+		if (take_forks2(philo))
+			return ;
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->next->fork);
-		check_status(philo);
-		ft_print(4, philo);
-		pthread_mutex_lock(&philo->fork);
+		if (take_forks3(philo))
+			return ;
 	}
-	check_status(philo);
-	ft_print(4, philo);
 	pthread_mutex_lock(&philo->data->t_eat);
 	philo->last_meal = get_current_time();
 	pthread_mutex_unlock(&philo->data->t_eat);
@@ -81,8 +72,8 @@ void	*philo_routine(void	*arg)
 	philo = (t_list *)arg;
 	if (philo->data->n_philo != 1 && philo->id % 2 != 0)
 		ft_usleep(50, philo);
-	philo->data->think_time = take_think(philo->data);
-	//think time es t_eat *2 - t_sleep
+	if (philo->id == 1 && philo->data->n_philo == 1)
+		ft_one_philo(philo);
 	while (1)
 	{
 		if (check_status(philo))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavicent <pavicent@student.42madrid>       +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:35:13 by pavicent          #+#    #+#             */
-/*   Updated: 2024/12/05 11:35:15 by pavicent         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:27:12 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,14 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-//el tenedor con el que entran es el de la izquierda.
-//Los pares cogen primero su tenedor, los impares el otro
 typedef struct s_list
 {
 	int				id;
 	pthread_mutex_t	fork;
-	long			last_meal; //time passed from last meal
+	long			last_meal;
 	long			meals_count;
 	bool			dead;
 	bool			full;
-	//struct s_list	*prev;
 	pthread_t		thread_id;
 	struct s_philo	*data;
 	struct s_list	*next;	
@@ -66,6 +63,8 @@ int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 int		ft_isspace(int c);
 int		parse_values(char **av);
+int		take_forks2(t_list *philo);
+int		take_forks3(t_list *philo);
 int64_t	ft_atoll(const char *str);
 long	get_current_time(void);
 long	take_think(t_philo *data);
@@ -75,6 +74,7 @@ void	eat(t_list *philo);
 void	end_sim(t_philo *data);
 void	exit_message(int pr);
 void	ft_free_struct(t_philo *data);
+void	ft_one_philo(t_list *philo);
 void	ft_print(int pr, t_list *philo);
 void	ft_usleep(long wait, t_list *philo);
 void	*philo_routine(void	*arg);

@@ -3,14 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ph2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavicent <pavicent@student.42madrid>       +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:44:32 by pavicent          #+#    #+#             */
-/*   Updated: 2024/12/19 12:44:34 by pavicent         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:26:47 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_one_philo(t_list *philo)
+{
+	ft_print(4, philo);
+	ft_usleep(philo->data->tt_die, philo);
+}
+
+int	take_forks2(t_list *philo)
+{
+	pthread_mutex_lock(&philo->next->fork);
+	ft_print(4, philo);
+	if (check_status(philo))
+	{
+		pthread_mutex_unlock(&philo->next->fork);
+		return (1);
+	}
+	pthread_mutex_lock(&philo->fork);
+	if (check_status(philo))
+	{
+		pthread_mutex_unlock(&philo->next->fork);
+		pthread_mutex_unlock(&philo->fork);
+		return (1);
+	}
+	ft_print(4, philo);
+	return (0);
+}
+
+int	take_forks3(t_list *philo)
+{
+	pthread_mutex_lock(&philo->fork);
+	if (check_status(philo))
+	{
+		pthread_mutex_unlock(&philo->fork);
+		return (1);
+	}
+	ft_print(4, philo);
+	pthread_mutex_lock(&philo->next->fork);
+	if (check_status(philo))
+	{
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(&philo->next->fork);
+		return (1);
+	}
+	ft_print(4, philo);
+	return (0);
+}
 
 void	check_death2(t_list *philo, long current_time)
 {

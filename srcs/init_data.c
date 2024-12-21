@@ -84,7 +84,7 @@ t_philo	*init_data(int ac, char **av)
 	data->tt_die = ft_atoi(av[2]);
 	data->tt_eat = ft_atoi(av[3]);
 	data->tt_sleep = ft_atoi(av[4]);
-	data->think_time = 0;
+	data->think_time = take_think(data);
 	data->nt_eat = -1;
 	data->start_time = get_current_time();
 	if (ac == 6)
