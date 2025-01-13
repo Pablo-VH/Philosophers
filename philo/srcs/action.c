@@ -74,17 +74,20 @@ void	*philo_routine(void	*arg)
 		ft_usleep(50, philo);
 	if (philo->id == 1 && philo->data->n_philo == 1)
 		ft_one_philo(philo);
-	while (1)
+	else
 	{
-		if (check_status(philo))
-			break ;
-		take_forks(philo);
-		if (check_status(philo))
-			break ;
-		philo_sleep(philo);
-		if (check_status(philo))
-			break ;
-		philo_think(philo);
+		while (1)
+		{
+			if (check_status(philo))
+				break ;
+			take_forks(philo);
+			if (check_status(philo))
+				break ;
+			philo_sleep(philo);
+			if (check_status(philo))
+				break ;
+			philo_think(philo);
+		}
 	}
 	return (NULL);
 }
