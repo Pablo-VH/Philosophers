@@ -1,4 +1,4 @@
-# Lazy Philosophers Tester  
+# Philosophers Tester  
 A semi-automatic tester for checking 42's philosophers project.  
 It allows you to test 2 scenarios:  
 1. when your program should stop, either due to death, enough eaten, or bad input  
