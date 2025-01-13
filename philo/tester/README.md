@@ -10,11 +10,6 @@ More tests can be added by editing the appropriate ```.txt``` files with the inp
 
 ![screenshot of tester being run](https://i.imgur.com/iAfsRWM.png)
 
-## Installation
-Clone the tester into the root directory of your philosophers project.  
-```bash
-https://github.com/MichelleJiam/LazyPhilosophersTester.git
-```
 
 ## Usage
 
@@ -43,7 +38,3 @@ a philo should die
 5 800 200 200 7
 no one should die, simulation should stop after 7 eats
 ```
-
-## Credits
-Timed-checker Python script ```PhilosophersChecker.py``` [(link)](https://gist.github.com/jkctech/367fad4aa01c820ffb1b8d29d1ecaa4d) was written by [JKCTech](https://gist.github.com/jkctech) and modified slightly by me to take an optional timer duration.  
-[Progress bar function](https://stackoverflow.com/a/52581824) written by Vagiz Duseev, found on StackOverflow.
