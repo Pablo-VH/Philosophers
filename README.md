@@ -1,4 +1,4 @@
-# Philosophers
+# Philosophers 🇪🇸
 
 Philosophers es un proyecto de la escuela 42 que implementa el clásico problema de los **filósofos comensales** utilizando hilos (threads) y mutexes en C. Este proyecto sirve como introducción a la programación concurrente, sincronización y prevención de condiciones de carrera.
 
@@ -50,7 +50,7 @@ Or:
 - Biblioteca `pthread` (incluida por defecto en sistemas UNIX)
 
 
-# Philosophers
+# Philosophers 🇬🇧
 
 Philosophers is a project from School 42 that implements the classic **philosophers dining** problem using threads and mutexes in C. This project serves as an introduction to concurrent programming, synchronisation, and race condition prevention.
 
