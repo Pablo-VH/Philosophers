@@ -24,7 +24,7 @@ Clona el repositorio y compílalo con:
 
 ```bash
 git clone https://github.com/Pablo-VH/Philosophers.git
-cd Philosophers
+cd Philosophers/philo
 make
 ```
 
@@ -76,7 +76,7 @@ Clone the repository and compile it with:
 
 ```bash
 git clone https://github.com/Pablo-VH/Philosophers.git
-cd Philosophers
+cd Philosophers/philo
 make
 ```
 
